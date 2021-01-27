@@ -55,7 +55,7 @@ function overallCalculation()
 
     document.getElementById("iPhoneUnitPrice").innerText=thousandSeparator(quantity1*1219);
     document.getElementById("iPhoneCaseUnitPrice").innerText=thousandSeparator(quantity2*59);
-    if(parseFloat(tax)>-1000)
+    if(parseFloat(tax)>1000)
     {
         document.getElementById("totalTax").innerText=thousandSeparator(parseFloat(tax).toFixed(2));
     }
@@ -86,6 +86,7 @@ removeItemBtn1.addEventListener("click",function(){
     let total=parseFloat(document.getElementById("totalWithTax").innerText.replace(",",""));
     let emptyTotal=total-(quantity1*1219)-(quantity1*12.19);
     document.getElementById("totalWithTax").innerText=emptyTotal.toFixed(2);
+    document.getElementById("quantityiPhone").value=0;
 })
 removeItemBtn2.addEventListener("click",function(){
     document.getElementById("cart2").style.display="none";
@@ -99,6 +100,7 @@ removeItemBtn2.addEventListener("click",function(){
     let total=parseFloat(document.getElementById("totalWithTax").innerText.replace(",",""));
     let emptyTotal=total-(quantity2*59)-(quantity2*5.9);
     document.getElementById("totalWithTax").innerText=emptyTotal.toFixed(2);
+    document.getElementById("quantityiPhoneCase").value=0;
 })
 function thousandSeparator(num)
   {
