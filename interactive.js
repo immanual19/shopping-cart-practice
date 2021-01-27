@@ -7,7 +7,6 @@
 //"iPhoneUnitPrice" 1 unit price of iPhone
 //iPhoneCaseUnitPrice" 1 unit price of iPhone Case
 
-
 //1
 const quantityMinus1Button=document.getElementById("quantityMinus1");
 quantityMinus1Button.addEventListener("click",function(){
@@ -103,14 +102,19 @@ function updateAllValues(){
     document.getElementById("totalWithTax").innerText=thousandSeparator((priceOfiPhoneNumber+iPhoneTax+priceOfiPhoneCaseNumber+iPhoneCaseTax).toFixed(2));
     
 }
+//remove it
 
 const removeItem1Button=document.getElementById("removeItem1");
 removeItem1Button.addEventListener("click",function(){
     vanishItem("cart1");
+    //remove it
+    updateAllValuesWithoutiPhone();
 })
 const removeItem2Button=document.getElementById("removeItem2");
 removeItem2Button.addEventListener("click",function(){
     vanishItem("cart2");
+    //remove it
+    updateAllValuesWithoutiPhoneCase();
     
 })
 
@@ -138,6 +142,40 @@ function sectionVanish(id){
         document.getElementById(id).style.display="block";
     }
 }
+
+
+
+//remove
+  function updateAllValuesWithoutiPhone(){
+
+    const iPhoneCaseUnitPrice=document.getElementById("iPhoneCaseUnitPrice").innerText.replace(",","");
+    const iPhoneCaseUnitPriceNumber=parseInt(iPhoneCaseUnitPrice);
+    let iPhoneCaseQuantity=document.getElementById("quantityiPhoneCase").value;
+    let iPhoneCaseQuantityNumber=parseInt(iPhoneCaseQuantity);
+    let iPhoneCaseTax=iPhoneCaseQuantityNumber*5.9;
+    const priceOfiPhoneCase=document.getElementById("iPhoneCaseUnitPrice").innerText.replace(",","");
+    const priceOfiPhoneCaseNumber=parseFloat(priceOfiPhoneCase);
+    document.getElementById("totalWithoutTax").innerText=thousandSeparator((priceOfiPhoneCaseNumber).toFixed(2));
+    document.getElementById("totalTax").innerText=thousandSeparator((iPhoneCaseTax).toFixed(2));
+    document.getElementById("totalWithTax").innerText=thousandSeparator((priceOfiPhoneCaseNumber+iPhoneCaseTax).toFixed(2));
+    
+}
+//remove
+
+//remove
+function updateAllValuesWithoutiPhoneCase(){
+    const iPhoneUnitPrice=document.getElementById("iPhoneUnitPrice").innerText.replace(",","");
+    const iPhoneUnitPriceNumber=parseInt(iPhoneUnitPrice);
+    let iPhoneQuantity=document.getElementById("quantityiPhone").value;
+    let iPhoneQuantityNumber=parseInt(iPhoneQuantity);
+    let iPhoneTax=iPhoneQuantityNumber*12.19;
+    const priceOfiPhone=document.getElementById("iPhoneUnitPrice").innerText.replace(",","");
+    const priceOfiPhoneNumber=parseFloat(priceOfiPhone);
+    document.getElementById("totalWithoutTax").innerText=thousandSeparator((priceOfiPhoneNumber).toFixed(2));
+    document.getElementById("totalTax").innerText=thousandSeparator((iPhoneTax).toFixed(2));
+    document.getElementById("totalWithTax").innerText=thousandSeparator((priceOfiPhoneNumber+iPhoneTax).toFixed(2));
+}
+//remove
 
 //Thousand Separator
 function thousandSeparator(num)
