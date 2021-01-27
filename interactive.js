@@ -1,136 +1,105 @@
-//first quantity begin
-const minusButton1=document.getElementById("quantityMinus1");
-minusButton1.addEventListener("click",function(){
-    const phoneQuan=parseInt(document.getElementById("quantityiPhone").value);
-    document.getElementById("quantityiPhone").value=quantityDecreased(phoneQuan);
-    if(phoneQuan>0)
+const quantityMinusBtn1=document.getElementById("quantityMinus1");
+const quantityPlusBtn1=document.getElementById("quantityPlus1");
+const quantityMinusBtn2=document.getElementById("quantityMinus2");
+const quantityPlusBtn2=document.getElementById("quantityPlus2");
+
+quantityMinusBtn1.addEventListener("click",function(){
+    let quantity1=document.getElementById("quantityiPhone").value;
+    if(quantity1>0)
     {
-        iPhoneValueDecreased();
-    }
-    calculation();
-})
-function quantityDecreased(num)
-{
-    if(num>0)
-    {
-        return num-1;
+        document.getElementById("quantityiPhone").value=quantity1-1;
     }
     else
     {
-        return 0;
+        document.getElementById("quantityiPhone").value=0;
     }
-}
-
-const plusButton1=document.getElementById("quantityPlus1");
-plusButton1.addEventListener("click",function(){
-    const phoneQuan=parseInt(document.getElementById("quantityiPhone").value);
-    document.getElementById("quantityiPhone").value=quantityIncreased(phoneQuan);
-    iPhoneValueIncreased();
-    calculation();
+  
+    overallCalculation();
 })
 
-function quantityIncreased(num)
-{
-    return num+1;
-}
-
-//first quantity ends
-
-//second quantity begin
-const minusButton2=document.getElementById("quantityMinus2");
-minusButton2.addEventListener("click",function(){
-    const phoneQuan=parseInt(document.getElementById("quantityiPhoneCase").value);
-    document.getElementById("quantityiPhoneCase").value=quantityDecreased(phoneQuan);
-    if(phoneQuan>0)
-    {
-        iPhoneCaseValueDecreased();
-    }
-    calculation();
+quantityPlusBtn1.addEventListener("click",function(){
+    let quantity1=document.getElementById("quantityiPhone").value;
+    document.getElementById("quantityiPhone").value=parseInt(quantity1)+1;
+    overallCalculation();
 })
 
-function quantityDecreased(num)
-{
-    if(num>0)
+quantityMinusBtn2.addEventListener("click",function(){
+    let quantity2=document.getElementById("quantityiPhoneCase").value;
+    if(quantity2>0)
     {
-        return num-1;
+        document.getElementById("quantityiPhoneCase").value=quantity2-1;
     }
     else
     {
-        return 0;
+        document.getElementById("quantityiPhoneCase").value=0;
     }
-}
-
-const plusButton2=document.getElementById("quantityPlus2");
-plusButton2.addEventListener("click",function(){
-    const phoneQuan=parseInt(document.getElementById("quantityiPhoneCase").value);
-    document.getElementById("quantityiPhoneCase").value=quantityIncreased(phoneQuan);
-    iPhoneCaseValueIncreased();
-    calculation();
+    overallCalculation();
 })
 
-function quantityIncreased(num)
+quantityPlusBtn2.addEventListener("click",function(){
+    let quantity2=document.getElementById("quantityiPhoneCase").value;
+    document.getElementById("quantityiPhoneCase").value=parseInt(quantity2)+1;
+    overallCalculation();
+})
+
+function overallCalculation()
 {
-    return num+1;
-}
-
-//second quantity ends
-
-
-const removeItem1Button=document.getElementById("removeItem1");
-removeItem1Button.addEventListener("click",function(){
-    document.getElementById("cart1").style.display="none";
-    document.getElementById("totalWithoutTax").innerText=parseFloat(document.getElementById("totalWithoutTax").innerText)-(parseInt(document.getElementById("quantityiPhone").value))*1219;
-    document.getElementById("totalTax").innerText=(parseFloat(document.getElementById("totalTax").innerText)-(parseInt(document.getElementById("quantityiPhone").value))*12.19).toFixed(2);
-
-    document.getElementById("totalWithTax").innerText=((parseFloat(document.getElementById("totalWithTax").innerText))-(parseInt(document.getElementById("quantityiPhone").value)*1219)-(parseInt(document.getElementById("quantityiPhone").value)*12.19)).toFixed(2);
+    let iPhoneUnitPrice=parseInt(document.getElementById("iPhoneUnitPrice").innerText.replace(",",""));
+    let quantity1=document.getElementById("quantityiPhone").value;
+    let iPhoneCaseUnitPrice=parseInt(document.getElementById("iPhoneCaseUnitPrice").innerText.replace(",",""));
+    let quantity2=document.getElementById("quantityiPhoneCase").value;
+    let subtotal=thousandSeparator((quantity1*1219)+(quantity2*59));
+    let tax=((quantity1*12.19)+(quantity2*5.9));
+    
     
 
-})
+    document.getElementById("iPhoneUnitPrice").innerText=thousandSeparator(quantity1*1219);
+    document.getElementById("iPhoneCaseUnitPrice").innerText=thousandSeparator(quantity2*59);
+    if(parseFloat(tax)>-1000)
+    {
+        document.getElementById("totalTax").innerText=thousandSeparator(parseFloat(tax).toFixed(2));
+    }
+    else
+    {
+        document.getElementById("totalTax").innerText=parseFloat(tax).toFixed(2);
+    }
+    document.getElementById("totalWithoutTax").innerText=subtotal;
+    let total=parseInt(document.getElementById("totalWithoutTax").innerText.replace(",","")) + parseFloat(document.getElementById("totalTax").innerText.replace(",",""));
+    document.getElementById("totalWithTax").innerText=thousandSeparator(total);
+    
 
-const removeItem2Button=document.getElementById("removeItem2");
-removeItem2Button.addEventListener("click",function(){
+}
+
+
+const removeItemBtn1=document.getElementById("removeItem1");
+const removeItemBtn2=document.getElementById("removeItem2");
+
+removeItemBtn1.addEventListener("click",function(){
+    document.getElementById("cart1").style.display="none";
+    let quantity1=document.getElementById("quantityiPhone").value;
+    let subtotal=parseInt(document.getElementById("totalWithoutTax").innerText.replace(",",""));
+    let emptySubtotal=thousandSeparator(subtotal-(quantity1*1219));
+    document.getElementById("totalWithoutTax").innerText=emptySubtotal;
+    let tax=parseFloat(document.getElementById("totalTax").innerText.replace(",",""));
+    let emptyTax=(tax-(quantity1*12.19)).toFixed(2);
+    document.getElementById("totalTax").innerText=emptyTax;
+    let total=parseFloat(document.getElementById("totalWithTax").innerText.replace(",",""));
+    let emptyTotal=total-(quantity1*1219)-(quantity1*12.19);
+    document.getElementById("totalWithTax").innerText=emptyTotal.toFixed(2);
+})
+removeItemBtn2.addEventListener("click",function(){
     document.getElementById("cart2").style.display="none";
-    document.getElementById("iPhoneCaseUnitPrice").innerText=0;
-    document.getElementById("totalWithoutTax").innerText=parseFloat(document.getElementById("totalWithoutTax").innerText)-(parseInt(document.getElementById("quantityiPhoneCase").value))*59;
-    document.getElementById("totalTax").innerText=(parseFloat(document.getElementById("totalTax").innerText)-(parseInt(document.getElementById("quantityiPhoneCase").value))*5.9).toFixed(2);
-
-    document.getElementById("totalWithTax").innerText=((parseFloat(document.getElementById("totalWithTax").innerText))-(parseInt(document.getElementById("quantityiPhoneCase").value)*59)-(parseInt(document.getElementById("quantityiPhoneCase").value)*5.9)).toFixed(2);
+    let quantity2=document.getElementById("quantityiPhoneCase").value;
+    let subtotal=parseInt(document.getElementById("totalWithoutTax").innerText.replace(",",""));
+    let emptySubtotal=thousandSeparator(subtotal-(quantity2*59));
+    document.getElementById("totalWithoutTax").innerText=emptySubtotal;
+    let tax=parseFloat(document.getElementById("totalTax").innerText.replace(",",""));
+    let emptyTax=(tax-(quantity2*5.9)).toFixed(2);
+    document.getElementById("totalTax").innerText=emptyTax;
+    let total=parseFloat(document.getElementById("totalWithTax").innerText.replace(",",""));
+    let emptyTotal=total-(quantity2*59)-(quantity2*5.9);
+    document.getElementById("totalWithTax").innerText=emptyTotal.toFixed(2);
 })
-
-function iPhoneValueDecreased(){
-    let oneUnitPrice=parseInt(document.getElementById("iPhoneUnitPrice").innerText);
-    document.getElementById("iPhoneUnitPrice").innerText=oneUnitPrice-1219;
-    document.getElementById("totalWithoutTax").innerText=parseInt(document.getElementById("totalWithoutTax").innerText)-1219;
-    document.getElementById("totalTax").innerText=(parseFloat(document.getElementById("totalTax").innerText)-12.19).toFixed(2);
-    document.getElementById("totalWithTax").innerText=parseFloat(document.getElementById("totalWithoutTax").innerText)+parseFloat(document.getElementById("totalTax").innerText);
-}
-
-function iPhoneValueIncreased(){
-    //let oneUnitPrice=parseInt(document.getElementById("iPhoneUnitPrice").innerText);
-    let iPhoneUnit=parseInt(document.getElementById("quantityiPhone").value);
-    document.getElementById("iPhoneUnitPrice").innerText=1219*iPhoneUnit;
-    document.getElementById("totalWithoutTax").innerText=parseInt(document.getElementById("totalWithoutTax").innerText)+1219;
-    document.getElementById("totalTax").innerText=(parseFloat(document.getElementById("totalTax").innerText)+12.19).toFixed(2);
-    document.getElementById("totalWithTax").innerText=parseFloat(document.getElementById("totalWithoutTax").innerText)+parseFloat(document.getElementById("totalTax").innerText);
-}
-
-function iPhoneCaseValueIncreased(){
-    //let oneUnitPrice=parseInt(document.getElementById("iPhoneUnitPrice").innerText);
-    let iPhoneUnit=parseInt(document.getElementById("quantityiPhoneCase").value);
-    document.getElementById("iPhoneCaseUnitPrice").innerText=59*iPhoneUnit;
-    document.getElementById("totalWithoutTax").innerText=parseInt(document.getElementById("totalWithoutTax").innerText)+59;
-    document.getElementById("totalTax").innerText=(parseFloat(document.getElementById("totalTax").innerText)+5.9).toFixed(2);
-    document.getElementById("totalWithTax").innerText=parseFloat(document.getElementById("totalWithoutTax").innerText)+parseFloat(document.getElementById("totalTax").innerText);
-}
-function iPhoneCaseValueDecreased(){
-    let oneUnitCasePrice=parseInt(document.getElementById("iPhoneCaseUnitPrice").innerText);
-    document.getElementById("iPhoneCaseUnitPrice").innerText=oneUnitCasePrice-59;
-    document.getElementById("totalWithoutTax").innerText=parseInt(document.getElementById("totalWithoutTax").innerText)-59;
-    document.getElementById("totalTax").innerText=(parseFloat(document.getElementById("totalTax").innerText)-5.9).toFixed(2);
-    document.getElementById("totalWithTax").innerText=parseFloat(document.getElementById("totalWithoutTax").innerText)+parseFloat(document.getElementById("totalTax").innerText);
-}
-
-
 function thousandSeparator(num)
   {
     var num_parts = num.toString().split(".");
